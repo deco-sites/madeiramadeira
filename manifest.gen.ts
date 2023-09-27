@@ -29,26 +29,6 @@ import * as $$$$$$22 from "./sections/Miscellaneous/CampaignTimer.tsx";
 import * as $$$$$$23 from "./sections/Miscellaneous/CookieConsent.tsx";
 import * as $$$$$$$$$$$0 from "./apps/site.ts";
 import * as $$$$$$$$$$$1 from "./apps/decohub.ts";
-import * as $$$$$$$$$$$2 from "./apps/custom/utils/transform.ts";
-import * as $$$$$$$$$$$3 from "./apps/custom/utils/cart.ts";
-import * as $$$$$$$$$$$4 from "./apps/custom/utils/constants.ts";
-import * as $$$$$$$$$$$5 from "./apps/custom/utils/openapi/vnda.openapi.gen.ts";
-import * as $$$$$$$$$$$6 from "./apps/custom/utils/client/client.ts";
-import * as $$$$$$$$$$$7 from "./apps/custom/utils/client/types.ts";
-import * as $$$$$$$$$$$8 from "./apps/custom/hooks/context.ts";
-import * as $$$$$$$$$$$9 from "./apps/custom/hooks/useCart.ts";
-import * as $$$$$$$$$$$10 from "./apps/custom/loaders/productListingPage.ts";
-import * as $$$$$$$$$$$11 from "./apps/custom/loaders/productList.ts";
-import * as $$$$$$$$$$$12 from "./apps/custom/loaders/cart.ts";
-import * as $$$$$$$$$$$13 from "./apps/custom/loaders/proxy.ts";
-import * as $$$$$$$$$$$14 from "./apps/custom/loaders/productDetailsPage.ts";
-import * as $$$$$$$$$$$15 from "./apps/custom/actions/cart/simulation.ts";
-import * as $$$$$$$$$$$16 from "./apps/custom/actions/cart/updateItem.ts";
-import * as $$$$$$$$$$$17 from "./apps/custom/actions/cart/updateCart.ts";
-import * as $$$$$$$$$$$18 from "./apps/custom/actions/cart/addItem.ts";
-import * as $$$$$$$$$$$19 from "./apps/custom/manifest.gen.ts";
-import * as $$$$$$$$$$$20 from "./apps/custom/runtime.ts";
-import * as $$$$$$$$$$$21 from "./apps/custom/mod.ts";
 
 const manifest = {
   "loaders": {
@@ -83,35 +63,6 @@ const manifest = {
     "deco-sites/madeiramadeira/sections/Theme/Theme.tsx": $$$$$$4,
   },
   "apps": {
-    "deco-sites/madeiramadeira/apps/custom/actions/cart/addItem.ts":
-      $$$$$$$$$$$18,
-    "deco-sites/madeiramadeira/apps/custom/actions/cart/simulation.ts":
-      $$$$$$$$$$$15,
-    "deco-sites/madeiramadeira/apps/custom/actions/cart/updateCart.ts":
-      $$$$$$$$$$$17,
-    "deco-sites/madeiramadeira/apps/custom/actions/cart/updateItem.ts":
-      $$$$$$$$$$$16,
-    "deco-sites/madeiramadeira/apps/custom/hooks/context.ts": $$$$$$$$$$$8,
-    "deco-sites/madeiramadeira/apps/custom/hooks/useCart.ts": $$$$$$$$$$$9,
-    "deco-sites/madeiramadeira/apps/custom/loaders/cart.ts": $$$$$$$$$$$12,
-    "deco-sites/madeiramadeira/apps/custom/loaders/productDetailsPage.ts":
-      $$$$$$$$$$$14,
-    "deco-sites/madeiramadeira/apps/custom/loaders/productList.ts":
-      $$$$$$$$$$$11,
-    "deco-sites/madeiramadeira/apps/custom/loaders/productListingPage.ts":
-      $$$$$$$$$$$10,
-    "deco-sites/madeiramadeira/apps/custom/loaders/proxy.ts": $$$$$$$$$$$13,
-    "deco-sites/madeiramadeira/apps/custom/manifest.gen.ts": $$$$$$$$$$$19,
-    "deco-sites/madeiramadeira/apps/custom/mod.ts": $$$$$$$$$$$21,
-    "deco-sites/madeiramadeira/apps/custom/runtime.ts": $$$$$$$$$$$20,
-    "deco-sites/madeiramadeira/apps/custom/utils/cart.ts": $$$$$$$$$$$3,
-    "deco-sites/madeiramadeira/apps/custom/utils/client/client.ts":
-      $$$$$$$$$$$6,
-    "deco-sites/madeiramadeira/apps/custom/utils/client/types.ts": $$$$$$$$$$$7,
-    "deco-sites/madeiramadeira/apps/custom/utils/constants.ts": $$$$$$$$$$$4,
-    "deco-sites/madeiramadeira/apps/custom/utils/openapi/vnda.openapi.gen.ts":
-      $$$$$$$$$$$5,
-    "deco-sites/madeiramadeira/apps/custom/utils/transform.ts": $$$$$$$$$$$2,
     "deco-sites/madeiramadeira/apps/decohub.ts": $$$$$$$$$$$1,
     "deco-sites/madeiramadeira/apps/site.ts": $$$$$$$$$$$0,
   },

@@ -6,10 +6,10 @@ import CartButtonVTEX from "$store/islands/Header/Cart/vtex.tsx";
 import CartButtonWake from "$store/islands/Header/Cart/wake.tsx";
 import CartButtonShopify from "$store/islands/Header/Cart/shopify.tsx";
 import Searchbar from "$store/islands/Header/Searchbar.tsx";
-import Image from "apps/website/components/Image.tsx";
+// import Image from "apps/website/components/Image.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
 import type { INavItem } from "./NavItem.tsx";
-import NavItem from "./NavItem.tsx";
+// import NavItem from "./NavItem.tsx";
 import { navbarHeight } from "./constants.ts";
 
 function Navbar({ items, searchbar, logo }: {
@@ -63,7 +63,7 @@ function Navbar({ items, searchbar, logo }: {
         <div class="flex flex-1 justify-center">
           <Searchbar searchbar={searchbar} />
         </div>
-        <div class="flex w-44 flex items-center justify-end gap-2">
+        <div class="flex w-44 items-center justify-end gap-2">
           <a
             class="btn btn-circle btn-sm btn-ghost"
             href="/login"

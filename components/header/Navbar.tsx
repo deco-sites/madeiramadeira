@@ -35,7 +35,7 @@ function Navbar({ items, searchbar, logo }: {
             style={{ minHeight: navbarHeight }}
             aria-label="Store logo"
           >
-            <Image src={logo.src} alt={logo.alt} width={126} height={16} />
+            <Icon id="Logo"/>
           </a>
         )}
 
@@ -43,11 +43,13 @@ function Navbar({ items, searchbar, logo }: {
           <SearchButton />
           {platform === "vtex" && <CartButtonVTEX />}
           {platform === "vnda" && <CartButtonVDNA />}
+          {platform === "wake" && <CartButtonWake />}
+          {platform === "shopify" && <CartButtonShopify />}
         </div>
       </div>
 
       {/* Desktop Version */}
-      <div class="hidden md:flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6">
+      <div class="hidden md:flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6 container">
         <div class="flex-none w-44">
           {logo && (
             <a
@@ -55,16 +57,15 @@ function Navbar({ items, searchbar, logo }: {
               aria-label="Store logo"
               class="block px-4 py-3 w-[160px]"
             >
-              <Image src={logo.src} alt={logo.alt} width={126} height={16} />
+              <Icon strokeWidth={undefined} id="Logo"/>
             </a>
           )}
         </div>
         <div class="flex-auto flex justify-center">
-          {items.map((item) => <NavItem item={item} />)}
+          <Searchbar searchbar={searchbar} />
         </div>
         <div class="flex-none w-44 flex items-center justify-end gap-2">
-          <SearchButton />
-          <Searchbar searchbar={searchbar} />
+  
           <a
             class="btn btn-circle btn-sm btn-ghost"
             href="/login"

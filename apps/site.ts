@@ -24,7 +24,7 @@ export type Props =
 
 type Platform = "vtex" | "vnda" | "shopify" | "wake" | "custom";
 
-export let _platform: Platform = "wake";
+export let _platform: Platform = "custom";
 
 const color = (platform: string) => {
   switch (platform) {

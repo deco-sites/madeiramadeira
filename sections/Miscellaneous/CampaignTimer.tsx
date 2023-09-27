@@ -3,16 +3,16 @@ import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
 
 export interface Banner {
   /** @description desktop otimized image */
-  desktop: ImageWidget;
+  desktop?: ImageWidget;
   /** @description mobile otimized image */
-  mobile: ImageWidget;
+  mobile?: ImageWidget;
   /** @description Image's alt text */
-  alt: string;
+  alt?: string;
   action?: {
     /** @description when user clicks on the image, go to this link */
-    href: string;
+    href?: string;
     /** @description Button label */
-    label: string;
+    label?: string;
   };
 }
 
@@ -36,6 +36,7 @@ export interface Props {
      * @title Text to show when expired
      */
     expired?: string;
+    days?: string;
     hours?: string;
     minutes?: string;
     seconds?: string;
@@ -46,12 +47,12 @@ export interface Props {
      * @title Link Text
      * @default button
      */
-    text: string;
+    text?: string;
     /**
      * @title Link href
      * @default #
      */
-    href: string;
+    href?: string;
   };
 
   layout?: {
@@ -74,6 +75,7 @@ const snippet = (expiresAt: string, rootId: string) => {
     const totalHours = (days * 24) + hours;
 
     return {
+      days,
       hours: Math.min(totalHours, 99),
       minutes,
       seconds,
@@ -90,7 +92,7 @@ const snippet = (expiresAt: string, rootId: string) => {
 
   const start = () =>
     setInterval(() => {
-      const { hours, minutes, seconds } = getDelta();
+      const { days, hours, minutes, seconds } = getDelta();
       const isExpired = hours + minutes + seconds < 0;
 
       if (isExpired) {
@@ -100,6 +102,7 @@ const snippet = (expiresAt: string, rootId: string) => {
         expired && expired.classList.remove("hidden");
         counter && counter.classList.add("hidden");
       } else {
+        setValue(`${rootId}::days`, days);
         setValue(`${rootId}::hours`, hours);
         setValue(`${rootId}::minutes`, minutes);
         setValue(`${rootId}::seconds`, seconds);
@@ -143,6 +146,15 @@ function CampaignTimer({
               <div class="grid grid-flow-col gap-3 text-center auto-cols-max items-center">
                 <div class="flex flex-col text-xs lg:text-sm">
                   <span class="countdown font-normal text-xl lg:text-2xl">
+                    <span id={`${id}::days`} />
+                  </span>
+                  {labels?.days || ""}
+                </div>
+                <div>
+                  :
+                </div>
+                <div class="flex flex-col text-xs lg:text-sm">
+                  <span class="countdown font-normal text-xl lg:text-2xl">
                     <span id={`${id}::hours`} />
                   </span>
                   {labels?.hours || ""}
@@ -176,13 +188,15 @@ function CampaignTimer({
               dangerouslySetInnerHTML={{ __html: text }}
             >
             </div>
-            <a
-              class="btn"
-              aria-label={link.text}
-              href={link.href}
-            >
-              {link.text}
-            </a>
+            {link && link.text && link.href && (
+              <a
+                class="btn"
+                aria-label={link.text}
+                href={link.href}
+              >
+                {link.text}
+              </a>
+            )}
           </div>
           <div
             class={`lg:hidden text-sm text-center lg:text-xl lg:text-left lg:max-w-lg ${

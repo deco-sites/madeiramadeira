@@ -127,7 +127,7 @@ function CampaignTimer({
 
   return (
     <>
-      <div class="bg-accent text-accent-content">
+      <div class="bg-accent text-accent-content relative">
         {image && image.desktop && image.mobile && (
           <div class="absolute w-full h-full inset-0">
             <a
@@ -136,14 +136,14 @@ function CampaignTimer({
           >
             <Picture>
               <Source
-                width={190}
-                height={190}
+                width={379}
+                height={156}
                 media="(max-width: 767px)"
                 src={image?.mobile}
               />
               <Source
-                width={640}
-                height={420}
+                width={1366}
+                height={56}
                 media="(min-width: 768px)"
                 src={image?.desktop}
               />

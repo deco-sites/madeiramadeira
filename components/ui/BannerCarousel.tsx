@@ -48,8 +48,8 @@ const DEFAULT_PROPS = {
       action: {
         href: "https://www.deco.cx/",
         label: "deco.cx",
-        title: "Demo Store",
-        subTitle: "Visit our site and start building now:",
+        title: "",
+        subTitle: "",
       },
       mobile:
         "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/239/24278f9e-412d-4a8a-b2d3-57353bb1b368",
@@ -61,8 +61,8 @@ const DEFAULT_PROPS = {
       action: {
         href: "https://www.deco.cx/",
         label: "deco.cx",
-        title: "Demo Store",
-        subTitle: "Visit our site and start building now:",
+        title: "",
+        subTitle: "",
       },
       mobile:
         "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/239/eeaa624c-a3e1-45e8-a6fe-034233cfbcd0",
@@ -74,8 +74,8 @@ const DEFAULT_PROPS = {
       action: {
         href: "https://www.deco.cx/",
         label: "deco.cx",
-        title: "Demo Store",
-        subTitle: "Visit our site and start building now:",
+        title: "",
+        subTitle: "",
       },
       mobile:
         "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/239/ae89571c-4a7c-44bf-9aeb-a341fd049d19",
@@ -122,7 +122,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
           alt={alt}
         />
       </Picture>
-      {action && (
+      {action && action?.title !== '' && action?.subTitle !== '' && (
         <div class="absolute h-min top-0 bottom-0 m-auto left-0 right-0 sm:right-auto sm:left-[12%] max-h-min max-w-[235px] flex flex-col gap-4 p-4 rounded glass">
           <span class="text-6xl font-medium text-base-100">
             {action.title}

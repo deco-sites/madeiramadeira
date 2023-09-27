@@ -23,8 +23,7 @@ function Navbar({ items, searchbar, logo }: {
     <>
       {/* Mobile Version */}
       <div
-        style={{ height: navbarHeight }}
-        class="md:hidden flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6 gap-2"
+        class={`md:hidden flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6 gap-2 min-h-[${navbarHeight}px]`}
       >
         <MenuButton />
 
@@ -35,7 +34,7 @@ function Navbar({ items, searchbar, logo }: {
             style={{ minHeight: navbarHeight }}
             aria-label="Store logo"
           >
-            <Icon id="Logo"/>
+            <Icon id="Logo" />
           </a>
         )}
 
@@ -50,22 +49,21 @@ function Navbar({ items, searchbar, logo }: {
 
       {/* Desktop Version */}
       <div class="hidden md:flex flex-row justify-between items-center border-b border-base-200 w-full pl-2 pr-6 container">
-        <div class="flex-none w-44">
+        <div class="flex-none w-auto">
           {logo && (
             <a
               href="/"
               aria-label="Store logo"
-              class="block px-4 py-3 w-[160px]"
+              class="block px-4 py-3"
             >
-              <Icon strokeWidth={undefined} id="Logo"/>
+              <Icon strokeWidth={undefined} id="Logo" height={27} />
             </a>
           )}
         </div>
-        <div class="flex-auto flex justify-center">
+        <div class="flex flex-1 justify-center">
           <Searchbar searchbar={searchbar} />
         </div>
-        <div class="flex-none w-44 flex items-center justify-end gap-2">
-  
+        <div class="flex w-44 flex items-center justify-end gap-2">
           <a
             class="btn btn-circle btn-sm btn-ghost"
             href="/login"

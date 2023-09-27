@@ -1,5 +1,20 @@
 import { useId } from "$store/sdk/useId.ts";
-import type { HTMLWidget } from "apps/admin/widgets.ts";
+import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
+
+export interface Banner {
+  /** @description desktop otimized image */
+  desktop: ImageWidget;
+  /** @description mobile otimized image */
+  mobile: ImageWidget;
+  /** @description Image's alt text */
+  alt: string;
+  action?: {
+    /** @description when user clicks on the image, go to this link */
+    href: string;
+    /** @description Button label */
+    label: string;
+  };
+}
 
 export interface Props {
   /**
@@ -7,6 +22,8 @@ export interface Props {
    * @default Time left for a campaign to end wth a link
    */
   text?: HTMLWidget;
+
+  image?: Banner;
 
   /**
    * @title Expires at date

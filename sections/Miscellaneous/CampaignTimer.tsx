@@ -1,3 +1,4 @@
+import { Picture, Source } from "apps/website/components/Picture.tsx";
 import { useId } from "$store/sdk/useId.ts";
 import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
 
@@ -117,6 +118,7 @@ const snippet = (expiresAt: string, rootId: string) => {
 function CampaignTimer({
   expiresAt = `${new Date()}`,
   labels,
+  image,
   text = "Time left for a campaign to end wth a link",
   link = { text: "Click me", href: "/hello" },
   layout = { textPosition: "Before counter" },
@@ -126,6 +128,36 @@ function CampaignTimer({
   return (
     <>
       <div class="bg-accent text-accent-content">
+        {image && image.desktop && image.mobile && (
+          <div class="absolute w-full h-full inset-0">
+            <a
+            href={image?.action?.href}
+            class={`overflow-hidden`}
+          >
+            <Picture>
+              <Source
+                width={190}
+                height={190}
+                media="(max-width: 767px)"
+                src={image?.mobile}
+              />
+              <Source
+                width={640}
+                height={420}
+                media="(min-width: 768px)"
+                src={image?.desktop}
+              />
+              <img
+                class="w-full h-full object-cover"
+                src={image?.mobile}
+                alt={image?.alt}
+                decoding="async"
+                loading="lazy"
+              />
+            </Picture>
+          </a>
+          </div>
+        )}
         <div class="container mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-center lg:gap-16 py-4 px-6 gap-4 ">
           {layout?.textPosition !== "After counter" &&
             (

@@ -95,18 +95,14 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
   } = image;
 
   return (
-    <a
-      href={action?.href ?? "#"}
-      aria-label={action?.label}
-      class="relative h-[600px] overflow-y-hidden w-full"
-    >
-      <Picture preload={lcp}>
+        <div class="relative sm:max-h-[376px] overflow-y-hidden w-full">
+    <Picture preload={lcp}>
         <Source
           media="(max-width: 767px)"
           fetchPriority={lcp ? "high" : "auto"}
           src={mobile}
           width={360}
-          height={600}
+          height={360}
         />
         <Source
           media="(min-width: 768px)"
@@ -122,18 +118,26 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
           alt={alt}
         />
       </Picture>
-      {(action && action.title && action.subTitle) ? (
-        <div class="absolute h-min top-0 bottom-0 m-auto left-0 right-0 sm:right-auto sm:left-[12%] max-h-min max-w-[235px] flex flex-col gap-4 p-4 rounded glass">
-          <span class="text-6xl font-medium text-base-100">
-            {action.title}
-          </span>
-          <span class="font-medium text-xl text-base-100">
-            {action.subTitle}
-          </span>
-          <Button class="glass">{action.label}</Button>
-        </div>
-      ) : null}
-    </a>
+      {(action && action.title && action.subTitle)
+        ? (
+          <div class="absolute h-min top-0 bottom-0 m-auto left-0 right-0 sm:right-auto sm:left-[12%] max-h-min max-w-[235px] flex flex-col gap-4 p-4 rounded glass">
+            <span class="text-6xl font-medium text-base-100">
+              {action.title}
+            </span>
+            <span class="font-medium text-xl text-base-100">
+              {action.subTitle}
+            </span>
+            <Button class="glass">{action.label}</Button>
+          </div>
+        )
+        : null}
+
+      <a
+        href={action?.href ?? "#"}
+        aria-label={action?.label}
+      >
+      </a>
+    </div>
   );
 }
 

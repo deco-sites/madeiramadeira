@@ -28,6 +28,26 @@
   }
 }
 
+@layer components {
+  /* @screen sm {
+    .container {
+      @apply px-[5%] max-w-screen-2xl;
+    }
+  }
+
+  @screen 3xl {
+    .container {
+      @apply px-0;
+    }
+  } */
+}
+
+@layer utilities {
+  .carousel-reveal {
+    @apply grid;
+  }
+}
+
 .group:disabled .group-disabled\:animate-progress {
   animation: progress-frame ease normal
 }

@@ -122,35 +122,78 @@ function Footer({
     "label": "Sobre",
     "items": [
       {
-        "href": "/quem-somos",
-        "label": "Quem somos",
+        "href": "/landing/confiavel",
+        "label": "Confiabilidade",
       },
       {
-        "href": "/termos-de-uso",
-        "label": "Termos de uso",
+        "href": "/landing/carreiras",
+        "label": "Carreira",
       },
       {
-        "href": "/trabalhe-conosco",
-        "label": "Trabalhe conosco",
+        "href": "/lojas",
+        "label": "Lojas Físicas",
+      },
+      {
+        "href": "/black-friday",
+        "label": "Black Friday",
+      },
+      {
+        "href": "/central-de-dicas",
+        "label": "Blog da Madeira",
       },
     ],
-  }, {
+  }, 
+  {
     "label": "Atendimento",
     "items": [
       {
-        "href": "/centraldeatendimento",
-        "label": "Central de atendimento",
+        "href": "/central-de-ajuda?origemInterna=footer",
+        "label": "Central de Ajuda",
       },
       {
-        "href": "/whatsapp",
-        "label": "Fale conosco pelo WhatsApp",
+        "href": "/landing/empresas",
+        "label": "Central de Ajuda",
       },
       {
-        "href": "/trocaedevolucao",
-        "label": "Troca e devolução",
+        "href": "/landing/madeira-decora",
+        "label": "Vantagens exclusivas para arquitetos",
+      },
+      {
+        "href": "/marketplace",
+        "label": "Venda no Marketplace da MadeiraMadeira",
+      },
+      {
+        "href": "/landing/cashback-madeira",
+        "label": "Cashback MadeiraMadeira",
       },
     ],
-  }],
+  },
+  {
+    "label": "Televendas",
+    "items": [
+      {
+        "href": "/central-de-ajuda?origemInterna=footer",
+        "label": "Central de Ajuda",
+      },
+      {
+        "href": "/landing/empresas",
+        "label": "Central de Ajuda",
+      },
+      {
+        "href": "/landing/madeira-decora",
+        "label": "Vantagens exclusivas para arquitetos",
+      },
+      {
+        "href": "/marketplace",
+        "label": "Venda no Marketplace da MadeiraMadeira",
+      },
+      {
+        "href": "/landing/cashback-madeira",
+        "label": "Cashback MadeiraMadeira",
+      },
+    ],
+  }
+],
   social = {
     title: "Redes sociais",
     items: [{ label: "Instagram", link: "/" }, { label: "Tiktok", link: "/" }],
@@ -222,13 +265,10 @@ function Footer({
         {(!layout?.variation || layout?.variation == "Variation 1") && (
           <div class="flex flex-col gap-10">
             <div class="flex flex-col md:flex-row md:justify-between md:flex-wrap lg:flex-nowrap gap-8 lg:gap-12">
-              {_logo}
               {_sectionLinks}
-              {_newsletter}
-            </div>
-            <Divider />
-            <div class="flex flex-col md:flex-row gap-10 md:gap-14 md:items-end">
               {_payments}
+            </div>
+            <div class="flex flex-col md:flex-row gap-10 md:gap-14 md:items-end">
               {_social}
               <div class="flex flex-col lg:flex-row gap-10 lg:gap-14 lg:items-end">
                 {_apps}

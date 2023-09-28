@@ -30,16 +30,17 @@ function Navbar({ items, searchbar, logo }: {
         {logo && (
           <a
             href="/"
-            class="flex-grow inline-flex items-center"
+            class="flex-grow inline-flex items-center justify-start"
             style={{ minHeight: navbarHeight }}
             aria-label="Store logo"
           >
-            <Icon id="Logo" />
+            <Icon id="Logo" height={27} width={188} />
           </a>
         )}
 
         <div class="flex gap-1">
           <SearchButton />
+          
           {platform === "vtex" && <CartButtonVTEX />}
           {platform === "vnda" && <CartButtonVDNA />}
           {platform === "wake" && <CartButtonWake />}

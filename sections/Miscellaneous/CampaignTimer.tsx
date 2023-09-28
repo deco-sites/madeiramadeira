@@ -5,26 +5,34 @@ import type { HTMLWidget, ImageWidget } from "apps/admin/widgets.ts";
 export interface Banner {
   /** @description desktop otimized image */
   desktop?: ImageWidget;
+  /** @description tablet otimized image */
+  tablet?: ImageWidget;
   /** @description mobile otimized image */
   mobile?: ImageWidget;
   /** @description Image's alt text */
   alt?: string;
+
   action?: {
     /** @description when user clicks on the image, go to this link */
     href?: string;
     /** @description Button label */
     label?: string;
   };
+
+  /**
+   * @description Check this option when this banner is the biggest image on the screen for image optimizations
+   */
+  preload?: boolean;
 }
 
 export interface Props {
-  /**
-   * @title Text
-   * @default Time left for a campaign to end wth a link
-   */
-  text?: HTMLWidget;
-
   image?: Banner;
+
+  /**
+   * @title Link href
+   * @default #
+   */
+  href?: string;
 
   /**
    * @title Expires at date
@@ -41,23 +49,6 @@ export interface Props {
     hours?: string;
     minutes?: string;
     seconds?: string;
-  };
-
-  link?: {
-    /**
-     * @title Link Text
-     * @default button
-     */
-    text?: string;
-    /**
-     * @title Link href
-     * @default #
-     */
-    href?: string;
-  };
-
-  layout?: {
-    textPosition?: "Before counter" | "After counter";
   };
 }
 
@@ -119,125 +110,82 @@ function CampaignTimer({
   expiresAt = `${new Date()}`,
   labels,
   image,
-  text = "Time left for a campaign to end wth a link",
-  link = { text: "Click me", href: "/hello" },
-  layout = { textPosition: "Before counter" },
+  href = "/hello",
 }: Props) {
   const id = useId();
 
   return (
     <>
-      <div class="bg-accent text-accent-content relative">
-        {image && image.desktop && image.mobile && (
-          <div class="absolute w-full h-full inset-0">
-            <a
-            href={image?.action?.href}
-            class={`overflow-hidden`}
+      <div class="bg-[#FFA901] text-accent-content relative h-[64px]">
+        <div class="container relative h-full px-0">
+          <div
+            id={`${id}::counter`}
+            class="absolute mx-auto flex flex-row w-full h-full items-center justify-end"
           >
+            <div class="grid grid-flow-col bg-white text-black p-2 rounded-md gap-3 text-center auto-cols-max items-center">
+              {}
+              <div class="flex flex-row items-end text-xs lg:text-sm">
+                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+                  <span id={`${id}::days`} />
+                </span>
+                {labels?.days || ""}
+              </div>
+              <div>:</div>
+              <div class="flex flex-row items-end text-xs lg:text-sm">
+                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+                  <span id={`${id}::hours`} />
+                </span>
+                {labels?.hours || ""}
+              </div>
+              <div>:</div>
+              <div class="flex flex-row items-end text-xs lg:text-sm">
+                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+                  <span id={`${id}::minutes`} />
+                </span>
+                {labels?.minutes || ""}
+              </div>
+              <div>:</div>
+              <div class="flex flex-row items-end text-xs lg:text-sm">
+                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+                  <span id={`${id}::seconds`} />
+                </span>
+                {labels?.seconds || ""}
+              </div>
+            </div>
+          </div>
+
+          {image && image.desktop && image.mobile && (
             <Picture>
               <Source
-                width={379}
-                height={156}
+                width={375}
+                height={50}
                 media="(max-width: 767px)"
                 src={image?.mobile}
               />
               <Source
+                width={375 + 140}
+                height={50}
+                media="(min-width: 768px) and (max-width:1024px)"
+                src={`https://ik.imagekit.io/decocx/tr:w-full,cm-extract,x-380,q-80/${image?.desktop}`}
+              />
+              <Source
                 width={1366}
-                height={56}
-                media="(min-width: 768px)"
+                height={64}
+                media="(min-width: 1025px)"
                 src={image?.desktop}
               />
               <img
-                class="w-full h-full object-cover"
                 src={image?.mobile}
                 alt={image?.alt}
                 decoding="async"
                 loading="lazy"
+                class="h-full block"
               />
             </Picture>
-          </a>
-          </div>
-        )}
-        <div class="container mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-center lg:gap-16 py-4 px-6 gap-4 ">
-          {layout?.textPosition !== "After counter" &&
-            (
-              <div
-                class="text-sm text-center lg:text-xl lg:text-left lg:max-w-lg"
-                dangerouslySetInnerHTML={{ __html: text }}
-              >
-              </div>
-            )}
-          <div
-            id={`${id}::expired`}
-            class="hidden text-sm text-center lg:text-xl lg:text-left lg:max-w-lg"
-          >
-            {labels?.expired || "Expired!"}
-          </div>
-          <div class="flex gap-8 lg:gap-16 items-center justify-center lg:justify-normal">
-            <div id={`${id}::counter`}>
-              <div class="grid grid-flow-col gap-3 text-center auto-cols-max items-center">
-                <div class="flex flex-col text-xs lg:text-sm">
-                  <span class="countdown font-normal text-xl lg:text-2xl">
-                    <span id={`${id}::days`} />
-                  </span>
-                  {labels?.days || ""}
-                </div>
-                <div>
-                  :
-                </div>
-                <div class="flex flex-col text-xs lg:text-sm">
-                  <span class="countdown font-normal text-xl lg:text-2xl">
-                    <span id={`${id}::hours`} />
-                  </span>
-                  {labels?.hours || ""}
-                </div>
-                <div>
-                  :
-                </div>
-                <div class="flex flex-col text-xs lg:text-sm">
-                  <span class="countdown font-normal text-xl lg:text-2xl">
-                    <span id={`${id}::minutes`} />
-                  </span>
-                  {labels?.minutes || ""}
-                </div>
-                <div>
-                  :
-                </div>
-                <div class="flex flex-col text-xs lg:text-sm">
-                  <span class="countdown font-normal text-xl lg:text-2xl">
-                    <span id={`${id}::seconds`} />
-                  </span>
-                  {labels?.seconds || ""}
-                </div>
-              </div>
-            </div>
-            <div
-              class={`hidden text-sm text-center lg:text-xl lg:text-left lg:max-w-lg ${
-                layout?.textPosition === "After counter"
-                  ? "lg:block"
-                  : "lg:hidden"
-              }`}
-              dangerouslySetInnerHTML={{ __html: text }}
-            >
-            </div>
-            {link && link.text && link.href && (
-              <a
-                class="btn"
-                aria-label={link.text}
-                href={link.href}
-              >
-                {link.text}
-              </a>
-            )}
-          </div>
-          <div
-            class={`lg:hidden text-sm text-center lg:text-xl lg:text-left lg:max-w-lg ${
-              layout?.textPosition === "After counter" ? "block" : "hidden"
-            }`}
-            dangerouslySetInnerHTML={{ __html: text }}
-          >
-          </div>
+          )}
         </div>
+
+        <a href={image?.action?.href || "#"} class={`after:content-[''] after:absolute after:inset-0 after:block after:w-full after:h-full`}></a>
       </div>
       <script
         type="module"

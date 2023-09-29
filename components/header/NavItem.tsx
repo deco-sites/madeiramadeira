@@ -3,7 +3,7 @@ import { headerHeight } from "./constants.ts";
 
 export interface INavItem {
   label: string;
-  href?: string;
+  href: string | null;
   children?: INavItem[];
   image?: { src?: string; alt?: string };
 }
@@ -13,7 +13,7 @@ function NavItem({ item }: { item: INavItem }) {
 
   return (
     <li class="group flex items-center">
-      <a href={href} class="px-4 py-3">
+      <a href={href || "#"} class="px-4 py-3">
         <span class="group-hover:underline">
           {label}
         </span>
@@ -38,14 +38,14 @@ function NavItem({ item }: { item: INavItem }) {
             <ul class="flex items-start justify-center gap-6">
               {children.map((node) => (
                 <li class="p-6">
-                  <a class="hover:underline" href={node.href}>
+                  <a class="hover:underline" href={node.href || "#"}>
                     <span>{node.label}</span>
                   </a>
 
                   <ul class="flex flex-col gap-1 mt-4">
                     {node.children?.map((leaf) => (
                       <li>
-                        <a class="hover:underline" href={leaf.href}>
+                        <a class="hover:underline" href={leaf.href || "#"}>
                           <span class="text-xs">{leaf.label}</span>
                         </a>
                       </li>

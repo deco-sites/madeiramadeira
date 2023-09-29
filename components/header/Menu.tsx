@@ -12,9 +12,11 @@ function MenuItem({ item }: { item: INavItem }) {
       <div class="collapse-title">{item.label}</div>
       <div class="collapse-content">
         <ul>
-          <li>
-            <a class="underline text-sm" href={item.href}>Ver todos</a>
-          </li>
+          {item.href && (
+            <li>
+              <a class="underline text-sm" href={item.href}>Ver todos</a>
+            </li>
+          )}
           {item.children?.map((node) => (
             <li>
               <MenuItem item={node} />

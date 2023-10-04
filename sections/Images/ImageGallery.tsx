@@ -32,48 +32,12 @@ export interface Props {
   title?: string;
   description?: string;
   /**
-   * @maxItems 4
-   * @minItems 4
+   * @maxItems 5
+   * @minItems 5
    */
   banners?: Banner[];
-  layout?: {
-    /**
-     * @description Aplique borda a sua imagem
-     */
-    borderRadius?: {
-      /** @default none */
-      mobile?: BorderRadius;
-      /** @default none */
-      desktop?: BorderRadius;
-    };
-    headerAlignment?: "center" | "left";
-    mobile?: "Asymmetric" | "Symmetrical";
-    desktop?: "Asymmetric" | "Symmetrical";
-  };
+  // layout?: {};
 }
-
-const RADIUS: Record<string, Record<BorderRadius, string>> = {
-  mobile: {
-    "none": "rounded-none",
-    "sm": "rounded-sm",
-    "md": "rounded-md",
-    "lg": "rounded-lg",
-    "xl": "rounded-xl",
-    "2xl": "rounded-2xl",
-    "3xl": "rounded-3xl",
-    "full": "rounded-full",
-  },
-  desktop: {
-    "none": "sm:rounded-none",
-    "sm": "sm:rounded-sm",
-    "md": "sm:rounded-md",
-    "lg": "sm:rounded-lg",
-    "xl": "sm:rounded-xl",
-    "2xl": "sm:rounded-2xl",
-    "3xl": "sm:rounded-3xl",
-    "full": "sm:rounded-full",
-  },
-};
 
 const DEFAULT_PROPS: Props = {
   "banners": [
@@ -110,92 +74,45 @@ const DEFAULT_PROPS: Props = {
       "href": "/",
     },
   ],
-  "layout": {
-    "borderRadius": {
-      "mobile": "3xl",
-      "desktop": "2xl",
-    },
-    "headerAlignment": "center",
-    "mobile": "Asymmetric",
-    "desktop": "Asymmetric",
-  },
 };
 
-function Banner(
-  props: Banner & {
-    borderRadius?: {
-      /** @default none */
-      mobile?: BorderRadius;
-      /** @default none */
-      desktop?: BorderRadius;
-    };
-  },
-) {
-  const { borderRadius, srcMobile, srcDesktop, alt } = props;
-  const radiusDesktop = RADIUS.desktop[borderRadius?.desktop ?? "none"];
-  const radiusMobile = RADIUS.mobile[borderRadius?.desktop ?? "none"];
-
-  return (
-    <a
-      href={props.href}
-      class={`overflow-hidden ${radiusDesktop} ${radiusMobile}`}
-    >
-      <Picture>
-        <Source
-          width={190}
-          height={190}
-          media="(max-width: 767px)"
-          src={srcMobile}
-        />
-        <Source
-          width={640}
-          height={420}
-          media="(min-width: 768px)"
-          src={srcDesktop || srcMobile}
-        />
-        <img
-          class="w-full h-full object-cover"
-          src={srcMobile}
-          alt={alt}
-          decoding="async"
-          loading="lazy"
-        />
-      </Picture>
-    </a>
-  );
-}
-
 export default function Gallery(props: Props) {
-  const { title, description, banners, layout } = {
+  const { title, description, banners } = {
     ...DEFAULT_PROPS,
     ...props,
   };
 
-  const mobileItemLayout = (index: number) =>
-    layout?.mobile === "Symmetrical"
-      ? "row-span-3"
-      : index === 0 || index === 3
-      ? "row-span-3"
-      : "row-span-2";
-
-  const desktopItemLayout = (index: number) =>
-    layout?.desktop === "Symmetrical"
-      ? "sm:row-span-3"
-      : index === 0 || index === 3
-      ? "sm:row-span-3"
-      : "sm:row-span-2";
-
   return (
     <section class="container px-4 py-8 flex flex-col gap-8 lg:gap-10 lg:py-10 lg:px-0">
-      <Header
-        title={title}
-        description={description}
-        alignment={layout?.headerAlignment || "center"}
-      />
-      <ul class="grid grid-flow-col grid-cols-2 grid-rows-6 gap-4 list-none">
-        {banners?.map((banner, index) => (
-          <li class={`${mobileItemLayout(index)} ${desktopItemLayout(index)}`}>
-            <Banner {...banner} borderRadius={props.layout?.borderRadius} />
+      <ul class="grid grid-cols-3 grid-rows-2 gap-4 list-none">
+        {banners?.map((banner, i) => (
+          <li>
+            <a
+              href={banner.href}
+              class={`overflow-hidden`}
+            >
+              <Picture>
+                <Source
+                  width={190}
+                  height={190}
+                  media="(max-width: 767px)"
+                  src={banner.srcMobile}
+                />
+                <Source
+                  width={640}
+                  height={420}
+                  media="(min-width: 768px)"
+                  src={banner.srcDesktop || banner.srcMobile}
+                />
+                <img
+                  class="w-full h-full object-cover"
+                  src={banner.srcMobile}
+                  alt={banner.alt}
+                  decoding="async"
+                  loading="lazy"
+                />
+              </Picture>
+            </a>
           </li>
         ))}
       </ul>

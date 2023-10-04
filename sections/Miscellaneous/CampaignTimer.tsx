@@ -68,7 +68,7 @@ const snippet = (expiresAt: string, rootId: string) => {
 
     return {
       days,
-      hours: Math.min(totalHours, 99),
+      hours: Math.min(totalHours, 23),
       minutes,
       seconds,
     };
@@ -122,31 +122,30 @@ function CampaignTimer({
             id={`${id}::counter`}
             class="absolute mx-auto flex flex-row w-full h-full items-center justify-end"
           >
-            <div class="grid grid-flow-col bg-white text-black p-2 rounded-md gap-3 text-center auto-cols-max items-center">
-              {}
-              <div class="flex flex-row items-end text-xs lg:text-sm">
-                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+            <div class="grid grid-flow-col bg-white text-black p-2 rounded-md gap-1 text-center auto-cols-max items-center">
+              <div class="text-xs lg:text-sm">
+                <span class="countdown font-normal text-lg lg:text-2xl tabular-nums">
                   <span id={`${id}::days`} />
                 </span>
                 {labels?.days || ""}
               </div>
               <div>:</div>
-              <div class="flex flex-row items-end text-xs lg:text-sm">
-                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+              <div class="text-xs lg:text-sm">
+                <span class="countdown font-normal text-lg lg:text-2xl tabular-nums">
                   <span id={`${id}::hours`} />
                 </span>
                 {labels?.hours || ""}
               </div>
               <div>:</div>
-              <div class="flex flex-row items-end text-xs lg:text-sm">
-                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+              <div class="text-xs lg:text-sm">
+                <span class="countdown font-normal text-lg lg:text-2xl tabular-nums">
                   <span id={`${id}::minutes`} />
                 </span>
                 {labels?.minutes || ""}
               </div>
               <div>:</div>
-              <div class="flex flex-row items-end text-xs lg:text-sm">
-                <span class="countdown font-normal text-xl lg:text-2xl tabular-nums">
+              <div class="text-xs lg:text-sm">
+                <span class="countdown font-normal text-lg lg:text-2xl tabular-nums">
                   <span id={`${id}::seconds`} />
                 </span>
                 {labels?.seconds || ""}

@@ -95,8 +95,8 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
   } = image;
 
   return (
-        <div class="relative sm:max-h-[376px] overflow-y-hidden w-full">
-    <Picture preload={lcp}>
+    <div class="relative sm:max-h-[376px] overflow-y-hidden w-full">
+      <Picture preload={lcp}>
         <Source
           media="(max-width: 767px)"
           fetchPriority={lcp ? "high" : "auto"}
@@ -144,25 +144,13 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
 function Dots({ images, interval = 0 }: Props) {
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @property --dot-progress {
-            syntax: '<percentage>';
-            inherits: false;
-            initial-value: 0%;
-          }
-          `,
-        }}
-      />
-      <ul class="carousel justify-center col-span-full gap-4 z-10 row-start-4">
+      <ul class="carousel justify-center col-span-full row-start-4 w-full">
         {images?.map((_, index) => (
           <li class="carousel-item">
             <Slider.Dot index={index}>
-              <div class="py-5">
+              <div class="py-5 px-1">
                 <div
-                  class="w-16 sm:w-20 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-base-100 from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]"
-                  style={{ animationDuration: `${interval}s` }}
+                  class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full group-disabled:bg-[#1F1F1F] bg-white border border-[#747474] shadow-sm"
                 />
               </div>
             </Slider.Dot>
@@ -206,23 +194,25 @@ function BannerCarousel(props: Props) {
   const id = useId();
 
   return (
-    <div
-      id={id}
-      class="grid grid-cols-[48px_1fr_48px] sm:grid-cols-[120px_1fr_120px] grid-rows-[1fr_48px_1fr_64px]"
-    >
-      <Slider class="carousel carousel-center w-full col-span-full row-span-full gap-6">
-        {images?.map((image, index) => (
-          <Slider.Item index={index} class="carousel-item w-full">
-            <BannerItem image={image} lcp={index === 0 && preload} />
-          </Slider.Item>
-        ))}
-      </Slider>
+    <div class="bg-yellow-400">
+      <div
+        id={id}
+        class="grid grid-cols-[48px_1fr_48px] sm:grid-cols-[120px_1fr_120px] grid-rows-[1fr_48px_1fr_32px] sm:container"
+      >
+        <Slider class="carousel carousel-center w-full col-span-full row-span-full gap-6 row-end-4">
+          {images?.map((image, index) => (
+            <Slider.Item index={index} class="carousel-item w-full">
+              <BannerItem image={image} lcp={index === 0 && preload} />
+            </Slider.Item>
+          ))}
+        </Slider>
 
-      <Buttons />
+        <Buttons />
 
-      <Dots images={images} interval={interval} />
+        <Dots images={images} interval={interval} />
 
-      <SliderJS rootId={id} interval={interval && interval * 1e3} infinite />
+        <SliderJS rootId={id} interval={interval && interval * 1e3} infinite />
+      </div>
     </div>
   );
 }

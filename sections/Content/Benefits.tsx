@@ -6,6 +6,10 @@ export interface Props {
   title?: string;
   description?: string;
   benefits?: Array<{
+
+    /**
+     * @titleBy title
+     */
     title: string;
     description: string;
     image: ImageWidget;

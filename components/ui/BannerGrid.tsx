@@ -50,41 +50,6 @@ export interface Props {
   banners: Banner[];
 }
 
-const MOBILE_COLUMNS = {
-  1: "grid-cols-1",
-  2: "grid-cols-2",
-};
-
-const DESKTOP_COLUMNS = {
-  1: "sm:grid-cols-1",
-  2: "sm:grid-cols-2",
-  4: "sm:grid-cols-4",
-  6: "sm:grid-cols-6",
-  8: "sm:grid-cols-8",
-};
-
-const RADIUS_MOBILE = {
-  "none": "rounded-none",
-  "sm": "rounded-sm",
-  "md": "rounded-md",
-  "lg": "rounded-lg",
-  "xl": "rounded-xl",
-  "2xl": "rounded-2xl",
-  "3xl": "rounded-3xl",
-  "full": "rounded-full",
-};
-
-const RADIUS_DESKTOP = {
-  "none": "sm:rounded-none",
-  "sm": "sm:rounded-sm",
-  "md": "sm:rounded-md",
-  "lg": "sm:rounded-lg",
-  "xl": "sm:rounded-xl",
-  "2xl": "sm:rounded-2xl",
-  "3xl": "sm:rounded-3xl",
-  "full": "sm:rounded-full",
-};
-
 const DEFAULT_PROPS: Props = {
   title: "Summer bags",
   banners: [
@@ -118,8 +83,6 @@ const DEFAULT_PROPS: Props = {
 export default function BannnerGrid(props: Props) {
   const {
     title,
-    itemsPerLine,
-    borderRadius,
     banners = [],
   } = { ...DEFAULT_PROPS, ...props };
 
@@ -136,14 +99,12 @@ export default function BannnerGrid(props: Props) {
           </div>
         )}
       <div
-        class={`grid gap-4 md:gap-6 grid-cols-3`}
+        class={`grid gap-4 md:gap-6 sm:grid-cols-3 max-sm:grid-rows-3`}
       >
         {banners.map(({ href, srcMobile, srcDesktop, alt }) => (
           <a
             href={href}
-            class={`overflow-hidden ${
-              RADIUS_MOBILE[borderRadius.mobile ?? "none"]
-            } ${RADIUS_DESKTOP[borderRadius.desktop ?? "none"]} `}
+            class={`overflow-hidden`}
           >
             <Picture>
               <Source
@@ -159,7 +120,7 @@ export default function BannnerGrid(props: Props) {
                 height={250}
               />
               <img
-                class="w-full"
+                class="w-full rounded-lg"
                 sizes="(max-width: 640px) 100vw, 30vw"
                 src={srcMobile}
                 alt={alt}

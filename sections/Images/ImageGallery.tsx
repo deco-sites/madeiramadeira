@@ -84,13 +84,10 @@ export default function Gallery(props: Props) {
 
   return (
     <section class="container px-4 py-8 flex flex-col gap-8 lg:gap-10 lg:py-10 lg:px-0">
-      <ul class="grid grid-cols-3 grid-rows-2 gap-4 list-none">
+      <ul class="flex flex-col sm:grid sm:grid-cols-3 sm:grid-rows-2 gap-6 list-none sm:h-[30rem]">
         {banners?.map((banner, i) => (
-          <li>
-            <a
-              href={banner.href}
-              class={`overflow-hidden`}
-            >
+          <li class={`h-48 sm:h-auto overflow-hidden relative group rounded-md ${(i === 0) ? "sm:row-span-2" : ""}`}>
+            <div class={`bg-[#d9d9d9] absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-full sm:duration-300 sm:group-hover:scale-125 ${(i === 0) ? "w-[120%] absolute h-full block" : "w-full"}`}>
               <Picture>
                 <Source
                   width={190}
@@ -105,13 +102,16 @@ export default function Gallery(props: Props) {
                   src={banner.srcDesktop || banner.srcMobile}
                 />
                 <img
-                  class="w-full h-full object-cover"
+                  class={`sm:pl-0 sm:aspect-[16/9] ${(i === 0 ? "absolute max-sm:w-2/3 sm:w-initial pl-[1.25rem] max-sm:left-1/2 max-sm:-translate-x-1/2 sm:translate-initial top-1/2 -translate-y-1/2 sm:left-[2.5rem]" : "object-cover top-1/2 -translate-y-1/2 w-full sm:w-initial absolute left-1/2 -translate-x-1/2")}`}
                   src={banner.srcMobile}
                   alt={banner.alt}
                   decoding="async"
                   loading="lazy"
                 />
               </Picture>
+            </div>
+            <a href={banner.href} class="absolute w-full h-full left-0 top-0 group" > 
+              <span class="absolute left-1/2 -translate-x-1/2 text-lg text-center text-[#004ABE] font-semibold rounded-md bg-white px-4 max-sm:w-full max-w-[90%] sm:max-w-[12rem] py-2 bottom-3">{banner.alt}</span>
             </a>
           </li>
         ))}

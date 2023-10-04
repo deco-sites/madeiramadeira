@@ -141,53 +141,6 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
   );
 }
 
-function Dots({ images, interval = 0 }: Props) {
-  return (
-    <>
-      <ul class="carousel justify-center col-span-full row-start-4 w-full">
-        {images?.map((_, index) => (
-          <li class="carousel-item">
-            <Slider.Dot index={index}>
-              <div class="py-5 px-1">
-                <div
-                  class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full group-disabled:bg-[#1F1F1F] bg-white border border-[#747474] shadow-sm"
-                />
-              </div>
-            </Slider.Dot>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-}
-
-function Buttons() {
-  return (
-    <>
-      <div class="flex items-center justify-center z-10 col-start-1 row-start-2">
-        <Slider.PrevButton class="btn btn-circle glass">
-          <Icon
-            class="text-base-100"
-            size={24}
-            id="ChevronLeft"
-            strokeWidth={3}
-          />
-        </Slider.PrevButton>
-      </div>
-      <div class="flex items-center justify-center z-10 col-start-3 row-start-2">
-        <Slider.NextButton class="btn btn-circle glass">
-          <Icon
-            class="text-base-100"
-            size={24}
-            id="ChevronRight"
-            strokeWidth={3}
-          />
-        </Slider.NextButton>
-      </div>
-    </>
-  );
-}
-
 function BannerCarousel(props: Props) {
   const { images, preload, interval } = { ...DEFAULT_PROPS, ...props };
 
@@ -197,7 +150,7 @@ function BannerCarousel(props: Props) {
     <div class="bg-yellow-400">
       <div
         id={id}
-        class="grid grid-cols-[48px_1fr_48px] sm:grid-cols-[120px_1fr_120px] grid-rows-[1fr_48px_1fr_32px] sm:container"
+        class="grid grid-cols-[48px_1fr_48px] sm:grid-cols-[120px_1fr_120px] grid-rows-[1fr_48px_1fr] sm:container relative"
       >
         <Slider class="carousel carousel-center w-full col-span-full row-span-full gap-6 row-end-4">
           {images?.map((image, index) => (
@@ -207,9 +160,38 @@ function BannerCarousel(props: Props) {
           ))}
         </Slider>
 
-        <Buttons />
+        <div class="flex items-center justify-center z-10 col-start-1 row-start-2">
+          <Slider.PrevButton class="btn btn-circle glass">
+            <Icon
+              class="text-base-100"
+              size={24}
+              id="ChevronLeft"
+              strokeWidth={3}
+            />
+          </Slider.PrevButton>
+        </div>
+        <div class="flex items-center justify-center z-10 col-start-3 row-start-2">
+          <Slider.NextButton class="btn btn-circle glass">
+            <Icon
+              class="text-base-100"
+              size={24}
+              id="ChevronRight"
+              strokeWidth={3}
+            />
+          </Slider.NextButton>
+        </div>
 
-        <Dots images={images} interval={interval} />
+        <ul class="carousel justify-center col-span-full row-start-4 w-full absolute bottom-[-48px]">
+          {images?.map((_, index) => (
+            <li class="carousel-item">
+              <Slider.Dot index={index}>
+                <div class="py-5 px-1">
+                  <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full group-disabled:bg-[#1F1F1F] bg-white border border-[#747474] shadow-sm" />
+                </div>
+              </Slider.Dot>
+            </li>
+          ))}
+        </ul>
 
         <SliderJS rootId={id} interval={interval && interval * 1e3} infinite />
       </div>

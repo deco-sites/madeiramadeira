@@ -184,7 +184,7 @@ function CampaignTimer({
           )}
         </div>
 
-        <a href={image?.action?.href || "#"} class={`after:content-[''] after:absolute after:inset-0 after:block after:w-full after:h-full`}></a>
+        <a href={image?.action?.href || "#"} class="after:content-[''] after:absolute after:inset-0 after:block after:w-full after:h-full"></a>
       </div>
       <script
         type="module"

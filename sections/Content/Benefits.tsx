@@ -6,9 +6,14 @@ export interface Props {
   title?: string;
   description?: string;
   benefits?: Array<{
-    label: string;
-    image: ImageWidget;
+    title: string;
     description: string;
+    image: ImageWidget;
+
+    link: {
+      href: string;
+      label: string;
+    };
   }>;
 }
 
@@ -49,13 +54,14 @@ export default function Benefits(
                     <div
                       class={`text-base lg:text-xl leading-7`}
                     >
-                      {benefit.label}
+                      {benefit.title}
                     </div>
                     <p
                       class={`text-sm leading-5`}
                     >
                       {benefit.description}
                     </p>
+                    <a href={benefit.link.href}>{benefit.link.label}</a>
                   </div>
                 </div>
               );

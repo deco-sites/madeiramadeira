@@ -22,18 +22,22 @@ export interface Props {
   platform: ReturnType<typeof usePlatform>;
 }
 
+interface AsideProps {
+  title: string | undefined;
+  onClose?: () => void;
+  children: ComponentChildren;
+}
+
 const Aside = (
-  { title, onClose, children }: {
-    title: string;
-    onClose?: () => void;
-    children: ComponentChildren;
-  },
+  { title, onClose, children }: AsideProps,
 ) => (
   <div class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-w-[100vw]">
     <div class="flex justify-between items-center">
-      <h1 class="px-4 py-3">
-        <span class="font-medium text-2xl">{title}</span>
-      </h1>
+      {title && (
+        <h1 class="px-4 py-3 font-medium text-2xl">
+          {title}
+        </h1>
+      )}
       {onClose && (
         <Button class="btn btn-ghost" onClick={onClose}>
           <Icon id="XMark" size={24} strokeWidth={2} />
@@ -55,46 +59,109 @@ const Aside = (
 function Drawers({ menu, searchbar, children, platform }: Props) {
   const { displayCart, displayMenu, displaySearchDrawer } = useUI();
 
+  const onClose = () => {
+    displaySearchDrawer.value = false;
+    displayMenu.value = false;
+    displayCart.value = false;
+  };
+
   return (
-    <Drawer // left drawer
-      open={displayMenu.value || displaySearchDrawer.value}
-      onClose={() => {
-        displayMenu.value = false;
-        displaySearchDrawer.value = false;
-      }}
-      aside={
-        <Aside
-          onClose={() => {
-            displayMenu.value = false;
-            displaySearchDrawer.value = false;
-          }}
-          title={displayMenu.value ? "Menu" : "Buscar"}
-        >
-          {displayMenu.value && <Menu {...menu} />}
-          {searchbar && displaySearchDrawer.value && (
-            <div class="w-screen">
-              <Searchbar {...searchbar} />
-            </div>
-          )}
-        </Aside>
-      }
-    >
-      <Drawer // right drawer
-        class="drawer-end"
-        open={displayCart.value !== false}
-        onClose={() => displayCart.value = false}
+    <>
+      <Drawer // Search from Left
+        open={displaySearchDrawer.value}
+        onClose={onClose}
         aside={
-          <Aside
-            title="Minha sacola"
-            onClose={() => displayCart.value = false}
-          >
-            <Cart platform={platform} />
-          </Aside>
+          <div class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-w-[100vw]">
+            <div class="flex justify-between items-center">
+              <h1 class="px-4 py-3 font-medium text-2xl">
+                Buscar
+              </h1>
+              {onClose && (
+                <Button class="btn btn-ghost" onClick={onClose}>
+                  <Icon id="XMark" size={24} strokeWidth={2} />
+                </Button>
+              )}
+            </div>
+            <Suspense
+              fallback={
+                <div class="w-screen flex items-center justify-center">
+                  <span class="loading loading-ring" />
+                </div>
+              }
+            >
+              {searchbar && displaySearchDrawer.value && (
+                <div class="w-screen">
+                  <Searchbar {...searchbar} />
+                </div>
+              )}
+            </Suspense>
+          </div>
         }
       >
         {children}
       </Drawer>
-    </Drawer>
+
+      <Drawer // Menu from Left
+        open={displayMenu.value}
+        onClose={onClose}
+        aside={
+          <div class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-w-[100vw]">
+            <div class="flex justify-between items-center">
+              <h1 class="px-4 py-3 font-medium text-2xl">
+                Menu
+              </h1>
+              {onClose && (
+                <Button class="btn btn-ghost" onClick={onClose}>
+                  <Icon id="XMark" size={24} strokeWidth={2} />
+                </Button>
+              )}
+            </div>
+            <Suspense
+              fallback={
+                <div class="w-screen flex items-center justify-center">
+                  <span class="loading loading-ring" />
+                </div>
+              }
+            >
+              {displayMenu.value && <Menu {...menu} />}
+            </Suspense>
+          </div>
+        }
+      >
+        {children}
+      </Drawer>
+
+      <Drawer // Cart from Right
+        class="drawer-end"
+        open={displayCart.value !== false}
+        onClose={onClose}
+        aside={
+          <div class="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y max-w-[100vw]">
+            <div class="flex justify-between items-center">
+              <h1 class="px-4 py-3 font-medium text-2xl">
+                Carrinho
+              </h1>
+              {onClose && (
+                <Button class="btn btn-ghost" onClick={onClose}>
+                  <Icon id="XMark" size={24} strokeWidth={2} />
+                </Button>
+              )}
+            </div>
+            <Suspense
+              fallback={
+                <div class="w-screen flex items-center justify-center">
+                  <span class="loading loading-ring" />
+                </div>
+              }
+            >
+              <Cart platform={platform} />
+            </Suspense>
+          </div>
+        }
+      >
+        {children}
+      </Drawer>
+    </>
   );
 }
 

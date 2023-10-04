@@ -46,17 +46,15 @@ function Header({
 
   return (
     <>
-      <header>
-        <Drawers
-          menu={{ items: navItems }}
-          searchbar={searchbar}
-          platform={platform}
-        >
-          <div class="bg-base-100 fixed w-full z-50">
-            <Navbar items={navItems} searchbar={searchbar} logo={logo} />
-          </div>
-        </Drawers>
+      <header class="">
+        <Navbar items={navItems} searchbar={searchbar} logo={logo} />
       </header>
+      
+      <Drawers
+        menu={{ items: navItems }}
+        searchbar={searchbar}
+        platform={platform}
+      />
     </>
   );
 }

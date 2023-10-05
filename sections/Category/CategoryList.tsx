@@ -20,7 +20,6 @@ export interface Props {
     description?: string;
   };
   list?: Category[];
-  // layout?: { };
 }
 
 function CategoryList(props: Props) {
@@ -56,7 +55,7 @@ function CategoryList(props: Props) {
 
       <Slider class="carousel carousel-start gap-4 lg:gap-8 row-start-3 row-end-5 overflow-y-hidden md:carousel-reveal md:grid-cols-4 lg:grid-cols-6">
         {list.map((
-          { tag, label, description, href, image, buttonText },
+          { tag, label, description, href, image },
           index,
         ) => (
           <Slider.Item

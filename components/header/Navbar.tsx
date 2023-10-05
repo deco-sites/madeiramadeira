@@ -1,5 +1,5 @@
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
-import Icon from "$store/components/ui/Icon.tsx";
+import Icon, { LazyIcon } from "$store/components/ui/Icon.tsx";
 import { MenuButton, SearchButton } from "$store/islands/Header/Buttons.tsx";
 import CartButtonVDNA from "$store/islands/Header/Cart/vnda.tsx";
 import CartButtonVTEX from "$store/islands/Header/Cart/vtex.tsx";
@@ -10,7 +10,6 @@ import Searchbar from "$store/islands/Header/Searchbar.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
 import { cmsMenu } from "deco-sites/madeiramadeira/components/header/constants.ts";
 import { FaArrowRight, FaChevronDown, FaChevronRight } from "react-icons/fa";
-import { IS_BROWSER } from "$fresh/runtime.ts";
 
 export type DatoCMSMenu = {
   id: string;
@@ -233,133 +232,144 @@ function Navbar({ items, searchbar, logo }: INavbar) {
                 data-menu-index={i}
               >
                 {root.label}
-                {IS_BROWSER && root.children!.length > 0 && (
-                  <FaChevronDown class="duration-300" />
+                {root.children!.length > 0 && (
+                  <LazyIcon>
+                    <FaChevronDown class="duration-300" />
+                  </LazyIcon>
                 )}
               </a>
             ))}
           </nav>
         </div>
 
-        {IS_BROWSER && (
-          <div class="bg-base-100 relative">
-            <div class="container relative">
-              {LINKS.filter((x) => x.children!.length).map((
-                root,
-                i,
-              ) => (
-                <div
-                  id={"menu-" + i}
-                  class="!hidden hover:!flex flex flex-row absolute w-full left-0 h-auto z-50"
-                >
-                  <div class="pointer-events-none fixed w-screen h-screen left-0 top-0 bg-black/50" />
+        <div class="bg-base-100 relative">
+          <div class="container relative">
+            {LINKS.filter((x) => x.children!.length).map((
+              root,
+              i,
+            ) => (
+              <div
+                id={"menu-" + i}
+                class="!hidden hover:!flex flex flex-row absolute w-full left-0 h-auto z-50"
+              >
+                <div class="pointer-events-none fixed w-screen h-screen left-0 top-0 bg-black/50" />
 
-                  {i === 0 && (
-                    <ul class="flex flex-col bg-base-100 w-60 z-10">
-                      {root.children!.map((a) => (
-                        <li class="group/item px-3 py-2 hover:bg-neutral-100">
+                {i === 0 && (
+                  <ul class="flex flex-col bg-base-100 w-60 z-10">
+                    {root.children!.map((a) => (
+                      <li class="group/item px-3 py-2 hover:bg-neutral-100">
+                        <a
+                          href={a.href!}
+                          class="inline-flex gap-2 justify-between items-center w-full text-base hover:text-[#004abe]"
+                        >
+                          {a.label}
+                          {a.children!.length > 0 &&
+                            (
+                              <LazyIcon>
+                                <FaChevronRight />
+                              </LazyIcon>
+                            )}
+                        </a>
+
+                        <ul class="hidden absolute group-hover/item:block px-6 py-4 gap-4 columns-4 top-0 left-[15rem] bg-base-100 w-[calc(100%-15rem)] min-h-[100%]">
+                          {a.children!.map((b, ii) => (
+                            <li class="break-inside-avoid mb-4">
+                              <a
+                                href={b.href!}
+                                class="block w-full group hover:text-[#004abe]"
+                              >
+                                <div class="flex relative justify-between">
+                                  <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
+                                    {b.label}
+                                  </span>
+                                  <LazyIcon>
+                                    <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
+                                  </LazyIcon>
+                                </div>
+                              </a>
+
+                              <nav class="flex flex-col pt-2 gap-1">
+                                {b.children!.slice(0, 4).map((c) => (
+                                  <a
+                                    href={c.href!}
+                                    class="w-full hover:text-[#004abe]"
+                                  >
+                                    {c.label}
+                                  </a>
+                                ))}
+                              </nav>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {i === 1 && (
+                  <>
+                    <ul class="bg-base-100 w-full px-6 py-4 row-gap-5 gap-6 columns-5  z-10">
+                      {root.children!.map((a, ii) => (
+                        <li class="break-inside-avoid mb-4">
                           <a
                             href={a.href!}
-                            class="inline-flex gap-2 justify-between items-center w-full text-base hover:text-[#004abe]"
+                            class="block w-full group hover:text-[#004abe]"
                           >
-                            {a.label}
-                            {a.children!.length > 0 && <FaChevronRight />}
+                            <div class="w-full aspect-[1/1] mb-1 bg-neutral-100">
+                            </div>
+                            <div class="flex relative justify-between">
+                              <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
+                                {a.label}
+                              </span>
+                              <LazyIcon>
+                                <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
+                              </LazyIcon>
+                            </div>
                           </a>
-
-                          <ul class="hidden absolute group-hover/item:block px-6 py-4 gap-4 columns-4 top-0 left-[15rem] bg-base-100 w-[calc(100%-15rem)] min-h-[100%]">
-                            {a.children!.map((b, ii) => (
-                              <li class="break-inside-avoid mb-4">
-                                <a
-                                  href={b.href!}
-                                  class="block w-full group hover:text-[#004abe]"
-                                >
-                                  <div class="flex relative justify-between">
-                                    <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
-                                      {b.label}
-                                    </span>
-                                    <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
-                                  </div>
-                                </a>
-
-                                <nav class="flex flex-col pt-2 gap-1">
-                                  {b.children!.slice(0, 4).map((c) => (
-                                    <a
-                                      href={c.href!}
-                                      class="w-full hover:text-[#004abe]"
-                                    >
-                                      {c.label}
-                                    </a>
-                                  ))}
-                                </nav>
-                              </li>
-                            ))}
-                          </ul>
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </>
+                )}
 
-                  {i === 1 && (
-                    <>
-                      <ul class="bg-base-100 w-full px-6 py-4 row-gap-5 gap-6 columns-5  z-10">
-                        {root.children!.map((a, ii) => (
-                          <li class="break-inside-avoid mb-4">
-                            <a
-                              href={a.href!}
-                              class="block w-full group hover:text-[#004abe]"
-                            >
-                              <div class="w-full aspect-[1/1] mb-1 bg-neutral-100">
-                              </div>
-                              <div class="flex relative justify-between">
-                                <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
-                                  {a.label}
-                                </span>
+                {i === 2 && (
+                  <>
+                    <ul class="bg-base-100 w-full px-6 py-4 row-gap-5 gap-6 columns-5  z-10">
+                      {root.children!.map((a, ii) => (
+                        <li class="break-inside-avoid mb-4">
+                          <a
+                            href={a.href!}
+                            class="block w-full group hover:text-[#004abe]"
+                          >
+                            <div class="flex relative justify-between">
+                              <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
+                                {a.label}
+                              </span>
+                              <LazyIcon>
                                 <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
-                              </div>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
+                              </LazyIcon>
+                            </div>
+                          </a>
 
-                  {i === 2 && (
-                    <>
-                      <ul class="bg-base-100 w-full px-6 py-4 row-gap-5 gap-6 columns-5  z-10">
-                        {root.children!.map((a, ii) => (
-                          <li class="break-inside-avoid mb-4">
-                            <a
-                              href={a.href!}
-                              class="block w-full group hover:text-[#004abe]"
-                            >
-                              <div class="flex relative justify-between">
-                                <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
-                                  {a.label}
-                                </span>
-                                <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
-                              </div>
-                            </a>
-
-                            <nav class="flex flex-col pt-2 gap-1">
-                              {a.children!.slice(0, 4).map((b) => (
-                                <a
-                                  href={b.href!}
-                                  class="w-full hover:text-[#004abe]"
-                                >
-                                  {b.label}
-                                </a>
-                              ))}
-                            </nav>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
+                          <nav class="flex flex-col pt-2 gap-1">
+                            {a.children!.slice(0, 4).map((b) => (
+                              <a
+                                href={b.href!}
+                                class="w-full hover:text-[#004abe]"
+                              >
+                                {b.label}
+                              </a>
+                            ))}
+                          </nav>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
 
       <script

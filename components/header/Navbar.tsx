@@ -133,7 +133,7 @@ function Navbar({ items, searchbar, logo }: INavbar) {
   return (
     <>
       {/* Mobile */}
-      <div class="md:hidden flex flex-col w-screen max-w-screen">
+      <div class="lg:hidden flex flex-col w-screen max-w-screen">
         <div class="flex flex-row gap-1 items-center">
           <MenuButton />
 
@@ -173,7 +173,7 @@ function Navbar({ items, searchbar, logo }: INavbar) {
       </div>
 
       {/* Desktop */}
-      <div class="hidden md:flex flex-col w-full border-b border-base-200">
+      <div class="hidden lg:flex flex-col w-full border-b border-base-200">
         <div class="bg-base-100 relative z-[100]">
           <div class="flex flex-row justify-between items-center w-full container z-50">
             <div class="flex-none w-auto">
@@ -224,15 +224,15 @@ function Navbar({ items, searchbar, logo }: INavbar) {
         </div>
 
         <div class="bg-[#004abe] relative z-[100]">
-          <nav class="flex container text-white">
+          <nav class="flex container text-white max-xl:gap-1 max-xl:justify-between">
             {LINKS.map((root, i) => (
               <a
-                href={root.href}
-                class="px-4 py-3 inline-flex items-center gap-2"
+                href={root.href!}
+                class="text-sm xl:text-base px-2 xl:px-4 py-3 inline-flex items-center gap-2"
                 data-menu-index={i}
               >
                 {root.label}
-                {root.children.length > 0 && (
+                {root.children!.length > 0 && (
                   <FaChevronDown class="duration-300" />
                 )}
               </a>
@@ -297,7 +297,28 @@ function Navbar({ items, searchbar, logo }: INavbar) {
                   </ul>
                 )}
 
-                {i === 1 && <></>}
+                {i === 1 && (
+                  <>
+                    <ul class="bg-base-100 w-full px-6 py-4 row-gap-5 gap-6 columns-5  z-10">
+                      {root.children!.map((a, ii) => (
+                        <li class="break-inside-avoid mb-4">
+                          <a
+                            href={a.href!}
+                            class="block w-full group hover:text-[#004abe]"
+                          >
+                            <div class="w-full aspect-[1/1] mb-1 bg-neutral-100"></div>
+                            <div class="flex relative justify-between">
+                              <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
+                                {a.label}
+                              </span>
+                              <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
+                            </div>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
 
                 {i === 2 && (
                   <>

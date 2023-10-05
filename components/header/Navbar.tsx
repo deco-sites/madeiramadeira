@@ -11,6 +11,8 @@ import { usePlatform } from "$store/sdk/usePlatform.tsx";
 import { cmsMenu } from "deco-sites/madeiramadeira/components/header/constants.ts";
 import { FaArrowRight, FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { IS_BROWSER } from "$fresh/runtime.ts";
+import { useSignal } from "@preact/signals";
+import { useEffect } from "preact/hooks";
 
 export type DatoCMSMenu = {
   id: string;
@@ -130,6 +132,11 @@ const bindDropdownMenu = () => {
 
 function Navbar({ items, searchbar, logo }: INavbar) {
   const platform = usePlatform();
+  const loading = useSignal(true);
+
+  useEffect(() => {
+    loading.value = false;
+  }, [])
 
   return (
     <>
@@ -243,7 +250,7 @@ function Navbar({ items, searchbar, logo }: INavbar) {
           </nav>
         </div>
 
-        {IS_BROWSER && (
+        {IS_BROWSER && !loading && (
           <div class="bg-base-100 relative">
             <div class="container relative">
               {LINKS.filter((x) => x.children!.length).map((

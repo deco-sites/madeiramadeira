@@ -7,7 +7,6 @@
   /* Allow changing font family via CMS */
   html {
     font-family: var(--font-family);
-    text-rendering: optimizeLegibility;
   }
 
   mark {

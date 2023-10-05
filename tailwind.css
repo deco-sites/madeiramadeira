@@ -39,7 +39,9 @@
 }
 
 @layer utilities {
-
+  .border {
+    @apply border-solid;
+  }
 
 }
 

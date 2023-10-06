@@ -98,7 +98,6 @@ function Searchbar({
         <input
           ref={searchInputRef}
           id="search-input"
-          type="search"
           class="px-3 py-2 lg:pr-14 text-base flex-grow border rounded-md"
           name={name}
           onFocus={(e) => {

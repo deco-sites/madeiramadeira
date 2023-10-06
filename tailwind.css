@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
 
   *, ::after, ::before {
-    border: none;
+    border: inherit;
   }
 
   /* Allow changing font family via CMS */
@@ -36,6 +37,7 @@
   .carousel-reveal {
     @apply grid;
   }
+
 }
 
 @layer utilities {

@@ -1,66 +1,23 @@
-import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
-import Icon, { LazyIcon } from "$store/components/ui/Icon.tsx";
-import { MenuButton, SearchButton } from "$store/islands/Header/Buttons.tsx";
-import CartButtonVDNA from "$store/islands/Header/Cart/vnda.tsx";
-import CartButtonVTEX from "$store/islands/Header/Cart/vtex.tsx";
-import CartButtonWake from "$store/islands/Header/Cart/wake.tsx";
-import CartButtonShopify from "$store/islands/Header/Cart/shopify.tsx";
-import Searchbar from "$store/islands/Header/Searchbar.tsx";
+import {
+  FaArrowRight,
+  FaChevronDown,
+  FaChevronRight,
+  FaCircle,
+} from "react-icons/fa";
 // import Image from "apps/website/components/Image.tsx";
+
+import Icon from "$store/components/ui/Icon.tsx";
+import LazySVG from "$store/components/ui/LazySVG.tsx";
+import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
+
+import Searchbar from "$store/islands/Header/Searchbar.tsx";
+import CartButtonWake from "$store/islands/Header/Cart/wake.tsx";
+import CartButtonVTEX from "$store/islands/Header/Cart/vtex.tsx";
+import CartButtonVDNA from "$store/islands/Header/Cart/vnda.tsx";
+import CartButtonShopify from "$store/islands/Header/Cart/shopify.tsx";
+import { MenuButton, SearchButton } from "$store/islands/Header/Buttons.tsx";
+
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
-import { cmsMenu } from "deco-sites/madeiramadeira/components/header/constants.ts";
-import { FaArrowRight, FaChevronDown, FaChevronRight } from "react-icons/fa";
-import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useSignal } from "@preact/signals";
-import { useEffect } from "preact/hooks";
-
-export type DatoCMSMenu = {
-  id: string;
-  linkName: string;
-  display: string;
-  link: {
-    id?: string;
-    url?: string;
-    image?: { url?: string } | null;
-    _modelApiKey?: string;
-  };
-
-  children: {
-    id: string;
-    linkName: string;
-    display: string;
-    link: {
-      id?: string;
-      url?: string;
-      image?: { url?: string } | null;
-      _modelApiKey?: string;
-    };
-
-    children: {
-      id: string;
-      linkName: string;
-      display: string;
-      link: {
-        id?: string;
-        url?: string;
-        image?: { url?: string } | null;
-        _modelApiKey?: string;
-      };
-
-      children: {
-        id: string;
-        linkName: string;
-        display: string;
-        link: {
-          id?: string;
-          url?: string;
-          image?: { url?: string } | null;
-          _modelApiKey?: string;
-        };
-      }[];
-    }[];
-  }[];
-}[];
 
 export interface INavItem {
   label: string;
@@ -69,59 +26,53 @@ export interface INavItem {
   image?: { src?: string; alt?: string };
 }
 
-export interface INavbar {
+export interface Props {
   items: INavItem[];
   searchbar?: SearchbarProps;
   logo?: { src: string; alt: string };
 }
 
-export const transformDatoCMSToNavItems = (w: DatoCMSMenu[0]) => ({
-  label: w.linkName,
-  href: w.link.url!,
-  image: { src: w.link?.image?.url },
-  children: w.children?.map((x) => ({
-    label: x.linkName,
-    href: x.link.url!,
-    image: { src: x.link?.image?.url },
-    children: x.children?.map((y) => ({
-      label: y.linkName,
-      href: y.link.url!,
-      image: { src: y.link?.image?.url },
-      children: y.children?.map((z) => ({
-        label: z.linkName,
-        href: z.link.url!,
-        image: { src: z.link?.image?.url },
-      })),
-    })),
-  })),
-});
-
-export const countLevels = (obj: INavItem, level = 0): number => {
-  if (!obj.children) return level;
-  return Math.max(...obj.children.map((x) => countLevels(x, level + 1)));
-};
-
-const LINKS: INavItem[] = cmsMenu.map(transformDatoCMSToNavItems);
-
 const bindDropdownMenu = () => {
   const links = document.querySelectorAll(`[data-menu-index]`);
 
-  const getMenuIndex = (el: Element) => el.getAttribute("data-menu-index");
+  const pickMenuIndex = (el: Element) => el.getAttribute("data-menu-index");
+
+  const pickIcon = (el: Element) => el.querySelector("img");
+
+  const pickDropByIndex = (index: number) =>
+    document.getElementById(`menu-${index}`);
+
+  const addRotate = (el: Element) => el?.classList.add("rotate-180");
+
+  const removeRotate = (el: Element) => el?.classList.remove("rotate-180");
+
+  const addHidden = (el: Element) => el?.classList.add("!hidden");
+
+  const removeHidden = (el: Element) => el?.classList.remove("!hidden");
 
   const show = (el: Element) => {
-    const id = getMenuIndex(el);
-    const drop = document.getElementById(`menu-${id}`);
+    const id = pickMenuIndex(el);
+    const icon = pickIcon(el);
+    const drop = pickDropByIndex(+id!);
 
-    el.querySelector("svg")?.classList.add("rotate-180");
-    drop?.classList.remove("!hidden");
+    addRotate(icon!);
+    removeHidden(drop!);
+
+    // Persist icon rotation on hover
+    drop?.addEventListener("mouseenter", () => addRotate(icon!));
+    drop?.addEventListener("mouseleave", () => removeRotate(icon!));
   };
 
   const hide = (el: Element) => {
-    const id = getMenuIndex(el);
-    const drop = document.getElementById(`menu-${id}`);
+    const id = pickMenuIndex(el);
+    const icon = pickIcon(el);
+    const drop = pickDropByIndex(+id!);
 
-    el.querySelector("svg")?.classList.remove("rotate-180");
-    drop?.classList.add("!hidden");
+    removeRotate(icon!);
+    addHidden(drop!);
+
+    drop?.removeEventListener("mouseenter", () => addRotate(icon!));
+    drop?.removeEventListener("mouseleave", () => removeRotate(icon!));
   };
 
   links.forEach((link) => {
@@ -130,10 +81,8 @@ const bindDropdownMenu = () => {
   });
 };
 
-function Navbar({ items, searchbar, logo }: INavbar) {
+function Navbar({ items, searchbar, logo }: Props) {
   const platform = usePlatform();
-  const loading = useSignal(0);
-
 
   return (
     <>
@@ -181,79 +130,76 @@ function Navbar({ items, searchbar, logo }: INavbar) {
 
       {/* Desktop */}
       <>
-        <div class="hidden lg:flex flex-col w-full border-b border-base-200">
-          <div class="bg-base-100 relative z-[100]">
-            <div class="flex flex-row justify-between items-center w-full container z-50">
-              <div class="flex-none w-auto">
-                {logo && (
-                  <a
-                    href="/"
-                    aria-label="Store logo"
-                    class="block"
-                  >
-                    <Icon
-                      strokeWidth={undefined}
-                      id="Logo"
-                      height={27}
-                      width={202}
-                    />
-                  </a>
-                )}
-              </div>
-              <div class="flex flex-1 justify-center">
-                <Searchbar searchbar={searchbar} />
-              </div>
-              <div class="flex w-44 items-center justify-end gap-2">
+        <div class="hidden lg:flex flex-col w-full bg-base-100 relative z-[100]">
+          <div class="flex flex-row justify-between items-center w-full container z-50">
+            <div class="flex-none w-auto">
+              {logo && (
                 <a
-                  class="btn btn-circle btn-sm btn-ghost"
-                  href="/login"
-                  aria-label="Log in"
-                >
-                  <Icon id="User" size={24} strokeWidth={0.4} />
-                </a>
-                <a
-                  class="btn btn-circle btn-sm btn-ghost"
-                  href="/wishlist"
-                  aria-label="Wishlist"
+                  href="/"
+                  aria-label="Store logo"
+                  class="block"
                 >
                   <Icon
-                    id="Heart"
-                    size={24}
-                    strokeWidth={2}
-                    fill="none"
+                    strokeWidth={undefined}
+                    id="Logo"
+                    height={27}
+                    width={202}
                   />
                 </a>
-                {platform === "vtex" && <CartButtonVTEX />}
-                {platform === "vnda" && <CartButtonVDNA />}
-                {platform === "wake" && <CartButtonWake />}
-                {platform === "shopify" && <CartButtonShopify />}
-              </div>
+              )}
+            </div>
+            <div class="flex flex-1 justify-center">
+              <Searchbar searchbar={searchbar} />
+            </div>
+            <div class="flex w-44 items-center justify-end gap-2">
+              <a
+                class="btn btn-circle btn-sm btn-ghost"
+                href="/login"
+                aria-label="Log in"
+              >
+                <Icon id="User" size={24} strokeWidth={0.4} />
+              </a>
+              <a
+                class="btn btn-circle btn-sm btn-ghost"
+                href="/wishlist"
+                aria-label="Wishlist"
+              >
+                <Icon
+                  id="Heart"
+                  size={24}
+                  strokeWidth={2}
+                  fill="none"
+                />
+              </a>
+              {platform === "vtex" && <CartButtonVTEX />}
+              {platform === "vnda" && <CartButtonVDNA />}
+              {platform === "wake" && <CartButtonWake />}
+              {platform === "shopify" && <CartButtonShopify />}
             </div>
           </div>
-
-          <div class="bg-[#004abe] relative z-[100]">
-            <nav class="flex container text-white max-xl:gap-1 max-xl:justify-between">
-              {LINKS.map((root, i) => (
-                <a
-                  href={root.href!}
-                  class="text-sm xl:text-base px-2 xl:px-4 py-3 inline-flex items-center gap-2"
-                  data-menu-index={i}
-                >
-                  {root.label}
-                  {root.children!.length > 0 && (
-                    <LazyIcon>
-                      <FaChevronDown class="duration-300" />
-                    </LazyIcon>
-                  )}
-                </a>
-              ))}
-            </nav>
-          </div>
-
         </div>
 
-        <div class="hidden lg:flex container relative">
-          {LINKS.filter((x) => x.children!.length).map((
+        <div class="hidden lg:flex flex-col w-full bg-[#004abe] relative z-[100]">
+          <nav class="flex container text-white max-xl:gap-1 max-xl:justify-between">
+            {items.map((root, i) => (
+              <a
+                href={root.href || "/"}
+                class="text-sm xl:text-base px-2 xl:px-4 py-3 inline-flex items-center gap-2 group/menu-item"
+                data-menu-index={root.children!.length > 0 ? i : undefined}
+              >
+                {root.label}
+                {root.children!.length > 0 && (
+                  <LazySVG class="duration-300 hover-group/menu-item:rotate-180">
+                    <FaChevronDown color="#fff" />
+                  </LazySVG>
+                )}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div class="hidden lg:flex w-full container relative">
+          {items.filter((x) => x.children!.length).map((
             root,
             i,
           ) => (
@@ -274,9 +220,14 @@ function Navbar({ items, searchbar, logo }: INavbar) {
                         {a.label}
                         {a.children!.length > 0 &&
                           (
-                            <LazyIcon>
-                              <FaChevronRight />
-                            </LazyIcon>
+                            <>
+                              <LazySVG class="hidden group-hover/item:inline-block">
+                                <FaCircle color="#004abe" size={12} />
+                              </LazySVG>
+                              <LazySVG class="group-hover/item:hidden">
+                                <FaChevronRight size={12} />
+                              </LazySVG>
+                            </>
                           )}
                       </a>
 
@@ -285,16 +236,15 @@ function Navbar({ items, searchbar, logo }: INavbar) {
                           <li class="break-inside-avoid mb-4">
                             <a
                               href={b.href!}
-                              class="block w-full group hover:text-[#004abe]"
+                              class="flex w-full relative group hover:text-[#004abe] justify-between"
                             >
-                              <div class="flex relative justify-between">
-                                <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
-                                  {b.label}
-                                </span>
-                                <LazyIcon>
-                                  <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
-                                </LazyIcon>
-                              </div>
+                              <span class="font-semibold border-box border-b border-solid border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
+                                {b.label}
+                              </span>
+
+                              <LazySVG class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block">
+                                <FaArrowRight color="#004abe" size={14} />
+                              </LazySVG>
                             </a>
 
                             <nav class="flex flex-col pt-2 gap-1">
@@ -330,9 +280,9 @@ function Navbar({ items, searchbar, logo }: INavbar) {
                             <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
                               {a.label}
                             </span>
-                            <LazyIcon>
+                            <LazySVG>
                               <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
-                            </LazyIcon>
+                            </LazySVG>
                           </div>
                         </a>
                       </li>
@@ -354,9 +304,9 @@ function Navbar({ items, searchbar, logo }: INavbar) {
                             <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
                               {a.label}
                             </span>
-                            <LazyIcon>
+                            <LazySVG>
                               <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
-                            </LazyIcon>
+                            </LazySVG>
                           </div>
                         </a>
 

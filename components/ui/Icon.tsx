@@ -1,6 +1,5 @@
 import { asset } from "$fresh/runtime.ts";
-import { renderToString } from "preact-render-to-string";
-import type { ComponentChildren, JSX, VNode } from "preact";
+import type { JSX } from "preact";
 
 export type AvailableIcons =
   | "ArrowsPointingOut"
@@ -67,20 +66,6 @@ function Icon(
       <use href={asset(`/sprites.svg#${id}`)} />
     </svg>
   );
-}
-
-export const encodeSVG = (svg: string) => {
-    const encoded = encodeURIComponent(svg);
-    return `data:image/svg+xml;charset=utf-8,${encoded}`;
-}
-
-interface ILazyIcon {
-  children?: ComponentChildren | JSX.Element | VNode;
-}
-
-export function LazyIcon({ children } : ILazyIcon) {
-  const svg = renderToString(children as never);
-  return <img decoding={"async"} loading={"lazy"} srcSet={encodeSVG(svg)} />
 }
 
 export default Icon;

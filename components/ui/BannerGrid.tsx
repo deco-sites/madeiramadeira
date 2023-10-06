@@ -99,6 +99,7 @@ export default function BannnerGrid(props: Props) {
             width={300}
             height={300}
             class="mx-auto h-full w-full object-contain aspect-[1/1]"
+            alt={alt || ""}
           />
         </a>
       ))}

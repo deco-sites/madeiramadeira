@@ -9,12 +9,16 @@ export default function Newsletter() {
           </p>
           <form action="/" class="flex flex-col justify-center gap-4 px-6">
             <div class="flex flex-col lg:flex-row gap-3">
+              <label htmlFor="newsletter-name" class="hidden">Name</label>
               <input
+                id="newsletter-name"
                 class="rounded-sm px-3 py-2 bg-white w-full md:w-full lg:w-8/12"
                 type="text"
                 placeholder="Digite o seu nome"
               />
+              <label htmlFor="newsletter-email" class="hidden">Email</label>
               <input
+              id="newsletter-email"
                 class="rounded-sm px-3 py-2 bg-white w-full md:w-full lg:w-full"
                 type="text"
                 placeholder="Digite o seu email"

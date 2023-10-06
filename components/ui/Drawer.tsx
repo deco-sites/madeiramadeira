@@ -41,6 +41,7 @@ function Drawer(props: Props) {
 
   return (
     <div class={`drawer z-[300] ${_class}`}>
+      <label htmlFor={id} class="hidden">Fechar</label>
       <input
         id={id}
         checked={open}

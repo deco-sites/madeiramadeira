@@ -94,7 +94,7 @@ function ProductCard(
   const cta = (
     <a
       href={url && relative(url)}
-      aria-label="view product"
+      aria-label="Ver produto"
       class="btn btn-block"
     >
       {l?.basics?.ctaText || "Ver produto"}

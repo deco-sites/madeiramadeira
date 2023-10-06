@@ -50,6 +50,7 @@ export default function Benefits(
                       width={96}
                       height={96}
                       class="mx-auto h-full object-contain aspect-[1/1]"
+                      alt={benefit.title || ""}
                     />
                   </div>
                   <div class="text-base font-semibold text-black">

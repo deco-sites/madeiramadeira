@@ -39,7 +39,7 @@ const Aside = (
         </h1>
       )}
       {onClose && (
-        <Button class="btn btn-ghost" onClick={onClose}>
+        <Button aria-label="Fechar" class="btn btn-ghost" onClick={onClose}>
           <Icon id="XMark" size={24} strokeWidth={2} />
         </Button>
       )}
@@ -77,7 +77,7 @@ function Drawers({ menu, searchbar, children, platform }: Props) {
                 Buscar
               </h1>
               {onClose && (
-                <Button class="btn btn-ghost" onClick={onClose}>
+                <Button aria-label="Fechar" class="btn btn-ghost" onClick={onClose}>
                   <Icon id="XMark" size={24} strokeWidth={2} />
                 </Button>
               )}
@@ -111,7 +111,7 @@ function Drawers({ menu, searchbar, children, platform }: Props) {
                 Menu
               </h1>
               {onClose && (
-                <Button class="btn btn-ghost" onClick={onClose}>
+                <Button aria-label="Fechar" class="btn btn-ghost" onClick={onClose}>
                   <Icon id="XMark" size={24} strokeWidth={2} />
                 </Button>
               )}
@@ -142,7 +142,7 @@ function Drawers({ menu, searchbar, children, platform }: Props) {
                 Carrinho
               </h1>
               {onClose && (
-                <Button class="btn btn-ghost" onClick={onClose}>
+                <Button aria-label="Fechar" class="btn btn-ghost" onClick={onClose}>
                   <Icon id="XMark" size={24} strokeWidth={2} />
                 </Button>
               )}

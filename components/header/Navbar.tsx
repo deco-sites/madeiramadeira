@@ -110,17 +110,17 @@ function Navbar({ items, searchbar, logo }: Props) {
               <span class="flex justify-center w-full sm:text-[0.5rem] text-[0.43rem] border-none">
                 compre pelo
               </span>
-              <LazySVG class="border-none">
+              <LazySVG alt="WhatsApp" class="border-none">
                 <FaWhatsapp  color="#25d366" size={21} />
               </LazySVG>
-              <LazySVG class="border-none">
+              <LazySVG alt="Televendas" class="border-none">
                 <AiOutlinePhone size={21} />
               </LazySVG>
             </div>
 
             <div class="inline-flex flex-row">
               <div class="flex justify-center p-2">
-                <LazySVG>
+                <LazySVG alt="Minha Conta">
                   <FaRegUser size={18} />
                 </LazySVG>
               </div>
@@ -199,7 +199,7 @@ function Navbar({ items, searchbar, logo }: Props) {
               >
                 {root.label}
                 {root.children!.length > 0 && (
-                  <LazySVG class="duration-300 hover-group/menu-item:rotate-180">
+                  <LazySVG alt="" class="duration-300 hover-group/menu-item:rotate-180">
                     <FaChevronDown color="#fff" />
                   </LazySVG>
                 )}
@@ -231,10 +231,10 @@ function Navbar({ items, searchbar, logo }: Props) {
                         {a.children!.length > 0 &&
                           (
                             <>
-                              <LazySVG class="hidden group-hover/item:inline-block">
+                              <LazySVG alt="" class="hidden group-hover/item:inline-block">
                                 <FaCircle color="#004abe" size={12} />
                               </LazySVG>
-                              <LazySVG class="group-hover/item:hidden">
+                              <LazySVG alt=""  class="group-hover/item:hidden">
                                 <FaChevronRight size={12} />
                               </LazySVG>
                             </>
@@ -252,7 +252,7 @@ function Navbar({ items, searchbar, logo }: Props) {
                                 {b.label}
                               </span>
 
-                              <LazySVG class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block">
+                              <LazySVG alt=""  class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block">
                                 <FaArrowRight color="#004abe" size={14} />
                               </LazySVG>
                             </a>
@@ -290,7 +290,7 @@ function Navbar({ items, searchbar, logo }: Props) {
                             <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
                               {a.label}
                             </span>
-                            <LazySVG>
+                            <LazySVG alt="">
                               <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
                             </LazySVG>
                           </div>
@@ -314,7 +314,7 @@ function Navbar({ items, searchbar, logo }: Props) {
                             <span class="font-semibold border-box border-b border-blue-100 pb-1 pr-6 group-hover:border-[#004abe]">
                               {a.label}
                             </span>
-                            <LazySVG>
+                            <LazySVG alt="">
                               <FaArrowRight class="hidden absolute right-0 top-1/2 -translate-y-1/2 group-hover:block" />
                             </LazySVG>
                           </div>

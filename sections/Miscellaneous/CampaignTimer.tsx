@@ -175,7 +175,7 @@ function CampaignTimer({
               />
               <img
                 src={image?.mobile}
-                alt={image?.alt}
+                alt={image?.alt || "Promoção limitada"}
                 decoding="async"
                 loading="lazy"
                 class="h-full block"

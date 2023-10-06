@@ -40,7 +40,7 @@ function Drawer(props: Props) {
   }, []);
 
   return (
-    <div class={`drawer ${_class}`}>
+    <div class={`drawer z-[300] ${_class}`}>
       <input
         id={id}
         checked={open}

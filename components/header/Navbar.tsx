@@ -3,7 +3,11 @@ import {
   FaChevronDown,
   FaChevronRight,
   FaCircle,
+  FaRegUser,
+  FaWhatsapp,
+  FaPhone,
 } from "react-icons/fa";
+import { AiOutlinePhone } from "react-icons/ai";
 // import Image from "apps/website/components/Image.tsx";
 
 import Icon from "$store/components/ui/Icon.tsx";
@@ -89,7 +93,7 @@ function Navbar({ items, searchbar, logo }: Props) {
       {/* Mobile */}
       <>
         <div class="lg:hidden flex flex-col w-screen max-w-screen">
-          <div class="flex flex-row gap-1 items-center">
+          <div class="flex flex-row gap-1 items-center px-4">
             <MenuButton />
 
             {logo && (
@@ -102,17 +106,23 @@ function Navbar({ items, searchbar, logo }: Props) {
               </a>
             )}
 
-            <div class="inline-flex flex-row flex-wrap justify-around p-1 border border max-w-[4rem]">
-              <span class="flex justify-center w-full sm:text-[0.5rem] text-[0.43rem]">
+            <div class="inline-flex flex-row flex-wrap justify-around p-1 border max-w-[4rem]">
+              <span class="flex justify-center w-full sm:text-[0.5rem] text-[0.43rem] border-none">
                 compre pelo
               </span>
-              <Icon id="WhatsApp" height={18} width={18} />
-              <Icon id="Phone" height={18} width={18} />
+              <LazySVG class="border-none">
+                <FaWhatsapp  color="#25d366" size={21} />
+              </LazySVG>
+              <LazySVG class="border-none">
+                <AiOutlinePhone size={21} />
+              </LazySVG>
             </div>
 
             <div class="inline-flex flex-row">
               <div class="flex justify-center p-2">
-                <Icon id="User" height={18} width={18} />
+                <LazySVG>
+                  <FaRegUser size={18} />
+                </LazySVG>
               </div>
 
               {platform === "vtex" && <CartButtonVTEX />}
@@ -122,15 +132,15 @@ function Navbar({ items, searchbar, logo }: Props) {
             </div>
           </div>
 
-          <div class="flex flex-row justify-between items-center ">
-            <SearchButton />
+          <div class="flex flex-row justify-between items-center px-4 py-3">
+            <Searchbar searchbar={searchbar} openDrawer  />
           </div>
         </div>
       </>
 
       {/* Desktop */}
       <>
-        <div class="hidden lg:flex flex-col w-full bg-base-100 relative z-[100]">
+        <div class="hidden lg:flex flex-col w-full bg-base-100 relative z-[100] py-3">
           <div class="flex flex-row justify-between items-center w-full container z-50">
             <div class="flex-none w-auto">
               {logo && (
@@ -148,7 +158,7 @@ function Navbar({ items, searchbar, logo }: Props) {
                 </a>
               )}
             </div>
-            <div class="flex flex-1 justify-center">
+            <div class="flex flex-1 justify-center px-4">
               <Searchbar searchbar={searchbar} />
             </div>
             <div class="flex w-44 items-center justify-end gap-2">

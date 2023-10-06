@@ -4,16 +4,17 @@ import Searchbar, {
 
 export interface Props {
   searchbar?: SearchbarProps;
+  openDrawer?: boolean;
 }
 
-function SearchbarModal({ searchbar }: Props) {
+function SearchbarModal({ searchbar, openDrawer }: Props) {
 
   if (!searchbar) {
     return null;
   }
 
   return (
-    <Searchbar {...searchbar} /> 
+    <Searchbar {...searchbar} openDrawer={openDrawer} /> 
   );
 }
 
